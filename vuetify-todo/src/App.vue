@@ -37,10 +37,39 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app>
+    <v-app-bar
+      app
+      color="#43a047"
+      dark
+      prominent
+      src="../public/winter.jpg"
+      fade-img-on-scroll
+      scroll-threshold="500"
+    >
+      <template v-slot:img="{ props }">
+        <v-img
+          v-bind="props"
+          gradient="to top right, rgba(55,236,186,.7), rgba(25,32,72,.7)"
+        ></v-img>
+      </template>
+
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-app-bar-title>Vuetify Todo</v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-dots-vertical</v-icon>
+      </v-btn>
     </v-app-bar>
 
     <v-main>
