@@ -1,36 +1,54 @@
 <template>
-  <div>
-    <v-list 
-    class="pt-0"
-    flat>
+  <div class="home">
+    <v-text-field
+      v-model="newTaskTitle"
+      @click:append="addNewTask"
+      @keyup.enter="addNewTask"
+      class="pa-3"
+      outlined
+      label="Add Task"
+      append-icon="mdi-plus"
+      hide-details
+      clearable
+    ></v-text-field>
+
+    <v-list v-if="tasks.length" class="pt-0" flat>
       <div v-for="task in tasks" :key="task.id">
-        <v-list-item 
-        @click="toggleTask(task.id)"
-        :class="{ 'blue lighten-4': task.done}"
+        <v-list-item
+          @click="toggleTask(task.id)"
+          :class="{ 'blue lighten-4': task.done }"
         >
-        <template v-slot:default>
-          <v-list-item-action>
-            <v-checkbox :input-value="task.done" color="primary"></v-checkbox>
-          </v-list-item-action>
+          <template v-slot:default>
+            <v-list-item-action>
+              <v-checkbox :input-value="task.done" color="primary"></v-checkbox>
+            </v-list-item-action>
 
-          <v-list-item-content>
-            <v-list-item-title
-            :class="{'text-decoration-line-through' : task.done}"
-            >{{task.title}}</v-list-item-title>
-          </v-list-item-content>
+            <v-list-item-content>
+              <v-list-item-title
+                :class="{ 'text-decoration-line-through': task.done }"
+                >{{ task.title }}</v-list-item-title
+              >
+            </v-list-item-content>
 
-          <v-list-item-action>
-          <v-btn 
-          @click.stop="deleteTask(task.id)"
-          icon>
-            <v-icon color="red">mdi-delete-forever</v-icon>
-          </v-btn>
-        </v-list-item-action>
-        </template>
-      </v-list-item>
-      <v-divider></v-divider>
+            <v-list-item-action>
+              <v-btn @click.stop="deleteTask(task.id)" icon>
+                <v-icon color="red">mdi-delete-forever</v-icon>
+              </v-btn>
+            </v-list-item-action>
+          </template>
+        </v-list-item>
+        <v-divider></v-divider>
       </div>
     </v-list>
+    <div 
+    v-else
+    class="no-tasks"
+    >
+      <v-icon 
+      size="100"
+       color="green"> mdi-check </v-icon>
+      <div class="text-h5 primary--text">No tasks added!</div>
+    </div>
   </div>
 </template>
 
@@ -39,6 +57,7 @@ export default {
   name: "Home",
   data() {
     return {
+      newTaskTitle: "",
       tasks: [
         {
           id: 1,
@@ -55,17 +74,36 @@ export default {
           title: "Build you portfolio",
           done: false,
         },
-      ]
+      ],
     };
   },
-  methods:{
-    toggleTask(id){
-      let task = this.tasks.filter(x => x.id === id)[0];
+  methods: {
+    toggleTask(id) {
+      let task = this.tasks.filter((x) => x.id === id)[0];
       task.done = !task.done;
     },
-    deleteTask(id){
-      this.tasks = this.tasks.filter(x => x.id !== id);
-    }
-  }
+    deleteTask(id) {
+      this.tasks = this.tasks.filter((x) => x.id !== id);
+    },
+    addNewTask() {
+      let newTask = {
+        id: Date.now(),
+        title: this.newTaskTitle,
+        done: false,
+      };
+
+      this.tasks.push(newTask);
+      this.newTaskTitle = "";
+    },
+  },
 };
 </script>
+
+<style lang="sass">
+  .no-tasks
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+    opacity: 0.7
+</style>
