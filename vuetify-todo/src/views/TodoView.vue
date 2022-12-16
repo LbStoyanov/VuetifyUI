@@ -12,10 +12,10 @@
       clearable
     ></v-text-field>
 
-    <v-list v-if="tasks.length" class="pt-0" flat>
-      <div v-for="task in tasks" :key="task.id">
+    <v-list v-if="$store.state.tasks.length" flat>
+      <div v-for="task in $store.state.tasks" :key="task.id">
         <v-list-item
-          @click="toggleTask(task.id)"
+          @click="$store.commit('toggleTask', task.id)"
           :class="{ 'blue lighten-4': task.done }"
         >
           <template v-slot:default>
@@ -31,7 +31,7 @@
             </v-list-item-content>
 
             <v-list-item-action>
-              <v-btn @click.stop="deleteTask(task.id)" icon>
+              <v-btn @click.stop="$store.commit('deleteTask', task.id)" icon>
                 <v-icon color="red">mdi-delete-forever</v-icon>
               </v-btn>
             </v-list-item-action>
@@ -57,44 +57,18 @@ export default {
   name: "Home",
   data() {
     return {
-      newTaskTitle: "",
-      tasks: [
-        {
-          id: 1,
-          title: "Wake up",
-          done: false,
-        },
-        {
-          id: 2,
-          title: "Go workout",
-          done: false,
-        },
-        {
-          id: 3,
-          title: "Build you portfolio",
-          done: false,
-        },
-      ],
+      newTaskTitle: '',
+      
     };
   },
   methods: {
-    toggleTask(id) {
-      let task = this.tasks.filter((x) => x.id === id)[0];
-      task.done = !task.done;
+    addNewTask(){
+       this.$store.commit('addNewTask', this.newTaskTitle);
+       this.newTaskTitle = '';
     },
-    deleteTask(id) {
-      this.tasks = this.tasks.filter((x) => x.id !== id);
-    },
-    addNewTask() {
-      let newTask = {
-        id: Date.now(),
-        title: this.newTaskTitle,
-        done: false,
-      };
+    
 
-      this.tasks.push(newTask);
-      this.newTaskTitle = "";
-    },
+    
   },
 };
 </script>
