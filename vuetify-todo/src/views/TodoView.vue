@@ -1,16 +1,6 @@
 <template>
   <div class="home">
-    <v-text-field
-      v-model="newTaskTitle"
-      @click:append="addNewTask"
-      @keyup.enter="addNewTask"
-      class="pa-3"
-      outlined
-      label="Add Task"
-      append-icon="mdi-plus"
-      hide-details
-      clearable
-    ></v-text-field>
+    <field-add-task />
 
     <v-list v-if="$store.state.tasks.length" flat>
       <div v-for="task in $store.state.tasks" :key="task.id">
@@ -40,41 +30,29 @@
         <v-divider></v-divider>
       </div>
     </v-list>
-    <div 
-    v-else
-    class="no-tasks"
-    >
-      <v-icon 
-      size="100"
-       color="green"> mdi-check </v-icon>
+    <div v-else class="no-tasks">
+      <v-icon size="100" color="green"> mdi-check </v-icon>
       <div class="text-h5 primary--text">No tasks added!</div>
     </div>
   </div>
 </template>
 
 <script>
+//Conventional way to add refer components => import FieldAddTask from '@/components/Todo/FieldAddTask.vue'
 export default {
   name: "Home",
-  data() {
-    return {
-      newTaskTitle: '',
-      
-    };
-  },
-  methods: {
-    addNewTask(){
-       this.$store.commit('addNewTask', this.newTaskTitle);
-       this.newTaskTitle = '';
-    },
+
+  components: {
+    "field-add-task": require("@/components/Todo/FieldAddTask.vue").default,
   },
 };
 </script>
 
 <style lang="sass">
-  .no-tasks
-    position: absolute
-    left: 50%
-    top: 50%
-    transform: translate(-50%, -50%)
-    opacity: 0.7
+.no-tasks
+  position: absolute
+  left: 50%
+  top: 50%
+  transform: translate(-50%, -50%)
+  opacity: 0.7
 </style>
