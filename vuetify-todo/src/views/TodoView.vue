@@ -66,9 +66,6 @@ export default {
        this.$store.commit('addNewTask', this.newTaskTitle);
        this.newTaskTitle = '';
     },
-    
-
-    
   },
 };
 </script>
