@@ -21,7 +21,7 @@
 export default {
     data() {
         return {            
-            text: 'Ko revesh?'
+            text: 'Task added!'
         }
     }
 }

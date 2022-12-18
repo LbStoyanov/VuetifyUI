@@ -21,7 +21,7 @@ export default {
   },
   methods: {
     addNewTask() {
-      this.$store.commit("addNewTask", this.newTaskTitle);
+      this.$store.dispatch("addNewTask", this.newTaskTitle);
       this.newTaskTitle = "";
     },
   },
